@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>肖耀 Yao Xiao | Portfolio</title>
+  <meta name="description" content="肖耀（Yao Xiao）摄影作品集网站，专注于人像摄影、纪实影像与数字艺术创作，通过光线、色彩与情绪表达探索影像叙事。" />
+  <style>
+    :root {
+      --bg: #0b0d10;
+      --panel: rgba(255,255,255,0.05);
+      --panel-strong: rgba(255,255,255,0.08);
+      --text: #f5f7fa;
+      --muted: #b2b8c2;
+      --line: rgba(255,255,255,0.1);
+      --accent: #d7b27c;
+      --max-width: 1200px;
+      --radius: 20px;
+      --shadow: 0 20px 60px rgba(0,0,0,0.35);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: Inter, "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(var(--max-width), calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .lang-zh .en,
+    .lang-en .zh {
+      display: none !important;
+    }
+
+    .nav {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 50;
+      background: linear-gradient(to bottom, rgba(11,13,16,0.92), rgba(11,13,16,0.55), transparent);
+      backdrop-filter: blur(10px);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 18px 0;
+    }
+
+    .brand {
+      font-size: 14px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav-links a,
+    .lang-toggle button,
+    .filter-btn {
+      font-size: 14px;
+      color: var(--muted);
+      background: transparent;
+      border: 0;
+      cursor: pointer;
+      transition: 0.25s ease;
+    }
+
+    .nav-links a:hover,
+    .lang-toggle button:hover,
+    .filter-btn:hover,
+    .filter-btn.active {
+      color: var(--text);
+    }
+
+    .lang-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.03);
+    }
+
+    .lang-toggle button {
+      padding: 6px 10px;
+      border-radius: 999px;
+    }
+
+    .lang-zh .lang-btn-zh,
+    .lang-en .lang-btn-en {
+      background: rgba(255,255,255,0.09);
+      color: var(--text);
+    }
+
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      isolation: isolate;
+    }
+
+    .hero-media {
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      overflow: hidden;
+    }
+
+    .hero-media img,
+    .hero-media video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.02);
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background:
+        linear-gradient(to bottom, rgba(11,13,16,0.46), rgba(11,13,16,0.68)),
+        radial-gradient(circle at 65% 30%, rgba(215,178,124,0.18), transparent 35%),
+        linear-gradient(to top, rgba(11,13,16,0.95), rgba(11,13,16,0.35));
+    }
+
+    .hero-content {
+      width: min(860px, 100%);
+      padding: 140px 0 80px;
+    }
+
+    .eyebrow {
+      font-size: 13px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #d9d1c6;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-size: clamp(46px, 8vw, 92px);
+      line-height: 0.95;
+      margin: 0;
+      letter-spacing: -0.04em;
+    }
+
+    .hero-subtitle {
+      margin-top: 22px;
+      font-size: clamp(18px, 2.5vw, 28px);
+      color: rgba(255,255,255,0.92);
+      font-weight: 500;
+    }
+
+    .hero-desc {
+      margin-top: 18px;
+      max-width: 720px;
+      font-size: 17px;
+      color: var(--muted);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 32px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-width: 140px;
+      padding: 14px 22px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      transition: 0.25s ease;
+    }
+
+    .btn-primary {
+      background: var(--text);
+      color: #111318;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      background: #ffffff;
+    }
+
+    .btn-secondary {
+      border-color: rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.03);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255,255,255,0.08);
+    }
+
+    section {
+      padding: 96px 0;
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 28px;
+      align-items: start;
+      margin-bottom: 34px;
+    }
+
+    .section-kicker {
+      font-size: 13px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      padding-top: 8px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: clamp(28px, 4vw, 48px);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+    }
+
+    .section-head p {
+      margin: 14px 0 0;
+      max-width: 760px;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .panel {
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .about-image {
+      min-height: 520px;
+      overflow: hidden;
+    }
+
+    .about-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .about-copy {
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .about-copy p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .stat {
+      padding: 18px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 26px;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .category-card {
+      padding: 24px;
+      min-height: 220px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .category-card::before {
+      content: "";
+      position: absolute;
+      inset: auto -30px -30px auto;
+      width: 120px;
+      height: 120px;
+      background: radial-gradient(circle, rgba(215,178,124,0.18), transparent 70%);
+      pointer-events: none;
+    }
+
+    .category-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .category-card h3 {
+      margin: 0;
+      font-size: 24px;
+      line-height: 1.1;
+    }
+
+    .category-count {
+      font-size: 18px;
+      color: var(--accent);
+      white-space: nowrap;
+    }
+
+    .category-card p {
+      margin: 16px 0 0;
+      color: var(--muted);
+      font-size: 15px;
+      max-width: 34ch;
+    }
+
+    .works-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 26px;
+      flex-wrap: wrap;
+    }
+
+    .filter-group {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      padding: 10px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.03);
+    }
+
+    .works-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .work-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 22px;
+      border: 1px solid var(--line);
+      background: #12151a;
+      cursor: pointer;
+      min-height: 420px;
+    }
+
+    .work-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .work-card:hover img {
+      transform: scale(1.04);
+    }
+
+    .work-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(11,13,16,0.9), rgba(11,13,16,0.08) 55%, rgba(11,13,16,0));
+    }
+
+    .work-info {
+      position: absolute;
+      inset: auto 20px 18px 20px;
+      z-index: 2;
+    }
+
+    .work-meta {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: rgba(255,255,255,0.72);
+      margin-bottom: 8px;
+    }
+
+    .work-title {
+      font-size: 22px;
+      margin: 0;
+      line-height: 1.15;
+    }
+
+    .work-subtitle {
+      margin: 8px 0 0;
+      color: rgba(255,255,255,0.78);
+      font-size: 14px;
+    }
+
+    .experience-list {
+      display: grid;
+      gap: 16px;
+    }
+
+    .experience-item {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 22px;
+      padding: 24px;
+    }
+
+    .experience-time {
+      color: var(--accent);
+      font-size: 14px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .experience-item h3 {
+      margin: 0;
+      font-size: 22px;
+    }
+
+    .experience-item p {
+      margin: 8px 0 0;
+      color: var(--muted);
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 20px;
+    }
+
+    .contact-card,
+    .contact-side {
+      padding: 28px;
+    }
+
+    .contact-card p,
+    .contact-side p {
+      color: var(--muted);
+      margin: 0 0 18px;
+    }
+
+    .contact-links {
+      display: grid;
+      gap: 14px;
+    }
+
+    .contact-link {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 16px 18px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255,255,255,0.03);
+      transition: 0.25s ease;
+    }
+
+    .contact-link:hover {
+      background: rgba(255,255,255,0.06);
+    }
+
+    .contact-link small {
+      color: var(--muted);
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    footer {
+      padding: 36px 0 56px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      border-top: 1px solid var(--line);
+      padding-top: 22px;
+    }
+
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(5,7,10,0.94);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      z-index: 100;
+    }
+
+    .lightbox.open {
+      display: flex;
+    }
+
+    .lightbox-inner {
+      position: relative;
+      width: min(1100px, 100%);
+      max-height: 100%;
+    }
+
+    .lightbox img {
+      width: 100%;
+      max-height: 82vh;
+      object-fit: contain;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: #0f1115;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(0,0,0,0.4);
+      color: white;
+      font-size: 22px;
+      cursor: pointer;
+    }
+
+    .lightbox-caption {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 980px) {
+      .section-head,
+      .about-grid,
+      .contact-grid,
+      .experience-item {
+        grid-template-columns: 1fr;
+      }
+
+      .categories-grid,
+      .works-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .about-image {
+        min-height: 380px;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .nav-inner {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .nav-links {
+        gap: 12px;
+      }
+
+      .hero-content {
+        padding-top: 170px;
+      }
+
+      section {
+        padding: 74px 0;
+      }
+
+      .stats,
+      .categories-grid,
+      .works-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .work-card {
+        min-height: 360px;
+      }
+
+      .contact-link {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body class="lang-zh">
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="#top" class="brand">YAO XIAO PORTFOLIO</a>
+      <div class="nav-links">
+        <a href="#about"><span class="zh">关于</span><span class="en">About</span></a>
+        <a href="#categories"><span class="zh">分类</span><span class="en">Categories</span></a>
+        <a href="#works"><span class="zh">作品</span><span class="en">Works</span></a>
+        <a href="#experience"><span class="zh">经历</span><span class="en">Experience</span></a>
+        <a href="#contact"><span class="zh">联系</span><span class="en">Contact</span></a>
+        <div class="lang-toggle" aria-label="language switcher">
+          <button class="lang-btn-zh" type="button" data-lang="zh">中文</button>
+          <button class="lang-btn-en" type="button" data-lang="en">EN</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero" id="top">
+    <div class="hero-media">
+      <img src="assets/images/hero/hero-cover.jpg" alt="Hero cover" />
+      <!-- 如需背景视频，把上面的 img 注释掉，改用下面这段
+      <video src="assets/videos/hero/hero-bg.mp4" autoplay muted loop playsinline></video>
+      -->
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="container">
+      <div class="hero-content">
+        <div class="eyebrow">Portrait Photography / Digital Image Creation</div>
+        <h1>肖耀<br />Yao Xiao</h1>
+        <div class="hero-subtitle">
+          <span class="zh">人像摄影师 / 数字影像创作者</span>
+          <span class="en">Portrait Photographer / Digital Image Creator</span>
+        </div>
+        <p class="hero-desc zh">通过光线、色彩与人物情绪，探索影像中的叙事与表达。</p>
+        <p class="hero-desc en">Exploring visual storytelling through light, color, and human emotion.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#works"><span class="zh">查看作品</span><span class="en">View Works</span></a>
+          <a class="btn btn-secondary" href="#contact"><span class="zh">联系我</span><span class="en">Contact</span></a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section id="about">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">About</div>
+        <div>
+          <h2><span class="zh">关于我</span><span class="en">About Me</span></h2>
+          <p class="zh">专注于人像摄影与数字影像创作，以稳定而独特的视觉语言，建立情绪、光线与色彩之间的关系。</p>
+          <p class="en">Focused on portrait photography and digital image creation, building a distinct visual language through emotion, light, and color.</p>
+        </div>
+      </div>
+
+      <div class="about-grid">
+        <div class="panel about-image">
+          <img src="assets/images/about/profile.jpg" alt="Yao Xiao portrait" />
+        </div>
+        <div class="panel about-copy">
+          <div>
+            <p class="zh">专注于人像摄影与数字影像创作。多年的创作实践，使我在人物情绪捕捉、画面结构与色彩表达之间逐渐形成独特而稳定的视觉语言。</p>
+            <p class="zh" style="margin-top: 18px;">我尤其擅长人像摄影与影像调色，通过对光线、色彩与细节的精细控制，让画面呈现更具情绪张力与叙事感的视觉表达。在后期创作中，我将摄影与数字艺术相融合，以细腻的色彩塑造与视觉设计，使每一幅作品都呈现独特而完整的影像气质。</p>
+
+            <p class="en">I focus on portrait photography and digital image creation. Through years of creative practice, I have gradually developed a distinctive and consistent visual language that balances emotional expression, composition, and color.</p>
+            <p class="en" style="margin-top: 18px;">My work is particularly centered on portrait photography and color grading. By carefully controlling light, color, and visual details, I aim to create images with strong emotional intensity and narrative depth. In post-production, I combine photography with digital art techniques, shaping each image through refined color aesthetics and visual design to form a unique and cohesive visual atmosphere.</p>
+          </div>
+
+          <div class="stats">
+            <div class="stat">
+              <strong>57</strong>
+              <span><span class="zh">已展示作品</span><span class="en">Selected Works</span></span>
+            </div>
+            <div class="stat">
+              <strong>6</strong>
+              <span><span class="zh">作品分类</span><span class="en">Categories</span></span>
+            </div>
+            <div class="stat">
+              <strong>CN / EN</strong>
+              <span><span class="zh">双语展示</span><span class="en">Bilingual Portfolio</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="categories">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">Categories</div>
+        <div>
+          <h2><span class="zh">作品分类</span><span class="en">Categories</span></h2>
+          <p class="zh">以城市、人物、日常、自然与数字影像为线索，建立不同层次的视觉叙事。</p>
+          <p class="en">A structured body of work spanning portraits, documentary moments, urban narratives, nature, and digital image experiments.</p>
+        </div>
+      </div>
+
+      <div class="categories-grid">
+        <article class="panel category-card">
+          <div class="category-top">
+            <h3><span class="zh">城与人</span><span class="en">City & People</span></h3>
+            <div class="category-count">12</div>
+          </div>
+          <p class="zh">城市空间与人物关系的视觉记录。</p>
+          <p class="en">Visual documentation of the relationship between urban spaces and human presence.</p>
+        </article>
+
+        <article class="panel category-card">
+          <div class="category-top">
+            <h3><span class="zh">纪实人像</span><span class="en">Documentary Portraits</span></h3>
+            <div class="category-count">12</div>
+          </div>
+          <p class="zh">以真实情绪与自然状态为核心的人像影像。</p>
+          <p class="en">Portraits focused on authenticity, natural emotion, and real-life moments.</p>
+        </article>
+
+        <article class="panel category-card">
+          <div class="category-top">
+            <h3><span class="zh">人文</span><span class="en">Human Stories</span></h3>
+            <div class="category-count">9</div>
+          </div>
+          <p class="zh">关注日常生活与社会情境中的人物与环境。</p>
+          <p class="en">Images exploring everyday life and the relationship between people and their environments.</p>
+        </article>
+
+        <article class="panel category-card">
+          <div class="category-top">
+            <h3><span class="zh">人像</span><span class="en">Portraits</span></h3>
+            <div class="category-count">12</div>
+          </div>
+          <p class="zh">以光线、构图与情绪表达为核心的风格化人像作品。</p>
+          <p class="en">Stylized portraits emphasizing lighting, composition, and emotional expression.</p>
+        </article>
+
+        <article class="panel category-card">
+          <div class="category-top">
+            <h3><span class="zh">数字艺术与自媒体</span><span class="en">Digital Art & Media</span></h3>
+            <div class="category-count">6</div>
+          </div>
+          <p class="zh">结合摄影与数字视觉创作的实验性影像。</p>
+          <p class="en">Experimental visual works combining photography with digital art techniques.</p>
+        </article>
+
+        <article class="panel category-card">
+          <div class="category-top">
+            <h3><span class="zh">自然</span><span class="en">Nature</span></h3>
+            <div class="category-count">6</div>
+          </div>
+          <p class="zh">记录自然环境与光影变化的影像作品。</p>
+          <p class="en">Photographic studies of natural environments, light, and atmosphere.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="works">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">Works</div>
+        <div>
+          <h2><span class="zh">精选作品</span><span class="en">Selected Works</span></h2>
+          
+        </div>
+      </div>
+
+      <div class="works-topbar">
+        <div class="filter-group">
+          <button class="filter-btn active" data-filter="human"><span class="zh">人文</span><span class="en">Human Stories</span></button>
+          <button class="filter-btn" data-filter="portraits"><span class="zh">人像</span><span class="en">Portraits</span></button>
+          <button class="filter-btn" data-filter="city"><span class="zh">城与人</span><span class="en">City & People</span></button>
+          <button class="filter-btn" data-filter="documentary"><span class="zh">纪实人像</span><span class="en">Documentary Portraits</span></button>
+          <button class="filter-btn" data-filter="digital"><span class="zh">数字艺术与自媒体</span><span class="en">Digital Art & Media</span></button>
+          <button class="filter-btn" data-filter="nature"><span class="zh">自然</span><span class="en">Nature</span></button>
+        </div>
+      </div>
+
+      <div class="works-grid" id="worksGrid">
+        <!-- City & People / 城与人 (12) -->
+        <article class="work-card" data-category="city" data-image="assets/images/works/city-and-people/city-people-01.jpg" data-caption-zh="城与人 01" data-caption-en="City & People 01"><img src="assets/images/works/city-and-people/city-people-01.jpg" alt="City & People 01" /><div class="work-info"><div class="work-meta"><span class="zh">城与人</span><span class="en">City & People</span></div><h3 class="work-title">City & People 01</h3></div></article>
+        <article class="work-card" data-category="city" data-image="assets/images/works/city-and-people/city-people-02.jpg" data-caption-zh="城与人 02" data-caption-en="City & People 02"><img src="assets/images/works/city-and-people/city-people-02.jpg" alt="City & People 02" /><div class="work-info"><div class="work-meta"><span class="zh">城与人</span><span class="en">City & People</span></div><h3 class="work-title">City & People 02</h3></div></article>
+        <article class="work-card" data-category="city" data-image="assets/images/works/city-and-people/city-people-03.jpg" data-caption-zh="城与人 03" data-caption-en="City & People 03"><img src="assets/images/works/city-and-people/city-people-03.jpg" alt="City & People 03" /><div class="work-info"><div class="work-meta"><span class="zh">城与人</span><span class="en">City & People</span></div><h3 class="work-title">City & People 03</h3></div></article>
+        <article class="work-card" data-category="city" data-image="assets/images/works/city-and-people/city-people-04.jpg" data-caption-zh="城与人 04" data-caption-en="City & People 04"><img src="assets/images/works/city-and-people/city-people-04.jpg" alt="City & People 04" /><div class="work-info"><div class="work-meta"><span class="zh">城与人</span><span class="en">City & People</span></div><h3 class="work-title">City & People 04</h3></div></article>
+        <article class="work-card" data-category="city" data-image="assets/images/works/city-and-people/city-people-05.jpg" data-caption-zh="城与人 05" data-caption-en="City & People 05"><img src="assets/images/works/city-and-people/city-people-05.jpg" alt="City & People 05" /><div class="work-info"><div class="work-meta"><span class="zh">城与人</span><span class="en">City & People</span></div><h3 class="work-title">City & People 05</h3></div></article>
+        <article class="work-card" data-category="city" data-image="assets/images/works/city-and-people/city-people-06.jpg" data-caption-zh="城与人 06" data-caption-en="City & People 06"><img src="assets/images/works/city-and-people/city-people-06.jpg" alt="City & People 06" /><div class="work-info"><div class="work-meta"><span class="zh">城与人</span><span class="en">City & People</span></div><h3 class="work-title">City & People 06</h3></div></article>
+        <article class="work-card" data-category="city" data-image="assets/images/works/city-and-people/city-people-07.jpg" data-caption-zh="城与人 07" data-caption-en="City & People 07"><img src="assets/images/works/city-and-people/city-people-07.jpg" alt="City & People 07" /><div class="work-info"><div class="work-meta"><span class="zh">城与人</span><span class="en">City & People</span></div><h3 class="work-title">City & People 07</h3></div></article>
+        <article class="work-card" data-category="city" data-image="assets/images/works/city-and-people/city-people-08.jpg" data-caption-zh="城与人 08" data-caption-en="City & People 08"><img src="assets/images/works/city-and-people/city-people-08.jpg" alt="City & People 08" /><div class="work-info"><div class="work-meta"><span class="zh">城与人</span><span class="en">City & People</span></div><h3 class="work-title">City & People 08</h3></div></article>
+        <article class="work-card" data-category="city" data-image="assets/images/works/city-and-people/city-people-09.jpg" data-caption-zh="城与人 09" data-caption-en="City & People 09"><img src="assets/images/works/city-and-people/city-people-09.jpg" alt="City & People 09" /><div class="work-info"><div class="work-meta"><span class="zh">城与人</span><span class="en">City & People</span></div><h3 class="work-title">City & People 09</h3></div></article>
+        <article class="work-card" data-category="city" data-image="assets/images/works/city-and-people/city-people-10.jpg" data-caption-zh="城与人 10" data-caption-en="City & People 10"><img src="assets/images/works/city-and-people/city-people-10.jpg" alt="City & People 10" /><div class="work-info"><div class="work-meta"><span class="zh">城与人</span><span class="en">City & People</span></div><h3 class="work-title">City & People 10</h3></div></article>
+        <article class="work-card" data-category="city" data-image="assets/images/works/city-and-people/city-people-11.jpg" data-caption-zh="城与人 11" data-caption-en="City & People 11"><img src="assets/images/works/city-and-people/city-people-11.jpg" alt="City & People 11" /><div class="work-info"><div class="work-meta"><span class="zh">城与人</span><span class="en">City & People</span></div><h3 class="work-title">City & People 11</h3></div></article>
+        <article class="work-card" data-category="city" data-image="assets/images/works/city-and-people/city-people-12.jpg" data-caption-zh="城与人 12" data-caption-en="City & People 12"><img src="assets/images/works/city-and-people/city-people-12.jpg" alt="City & People 12" /><div class="work-info"><div class="work-meta"><span class="zh">城与人</span><span class="en">City & People</span></div><h3 class="work-title">City & People 12</h3></div></article>
+
+        <!-- Documentary Portraits / 纪实人像 (12) -->
+        <article class="work-card" data-category="documentary" data-image="assets/images/works/documentary-portraits/documentary-portrait-01.jpg" data-caption-zh="纪实人像 01" data-caption-en="Documentary Portrait 01"><img src="assets/images/works/documentary-portraits/documentary-portrait-01.jpg" alt="Documentary Portrait 01" /><div class="work-info"><div class="work-meta"><span class="zh">纪实人像</span><span class="en">Documentary Portraits</span></div><h3 class="work-title">Documentary Portrait 01</h3></div></article>
+        <article class="work-card" data-category="documentary" data-image="assets/images/works/documentary-portraits/documentary-portrait-02.jpg" data-caption-zh="纪实人像 02" data-caption-en="Documentary Portrait 02"><img src="assets/images/works/documentary-portraits/documentary-portrait-02.jpg" alt="Documentary Portrait 02" /><div class="work-info"><div class="work-meta"><span class="zh">纪实人像</span><span class="en">Documentary Portraits</span></div><h3 class="work-title">Documentary Portrait 02</h3></div></article>
+        <article class="work-card" data-category="documentary" data-image="assets/images/works/documentary-portraits/documentary-portrait-03.jpg" data-caption-zh="纪实人像 03" data-caption-en="Documentary Portrait 03"><img src="assets/images/works/documentary-portraits/documentary-portrait-03.jpg" alt="Documentary Portrait 03" /><div class="work-info"><div class="work-meta"><span class="zh">纪实人像</span><span class="en">Documentary Portraits</span></div><h3 class="work-title">Documentary Portrait 03</h3></div></article>
+        <article class="work-card" data-category="documentary" data-image="assets/images/works/documentary-portraits/documentary-portrait-04.jpg" data-caption-zh="纪实人像 04" data-caption-en="Documentary Portrait 04"><img src="assets/images/works/documentary-portraits/documentary-portrait-04.jpg" alt="Documentary Portrait 04" /><div class="work-info"><div class="work-meta"><span class="zh">纪实人像</span><span class="en">Documentary Portraits</span></div><h3 class="work-title">Documentary Portrait 04</h3></div></article>
+        <article class="work-card" data-category="documentary" data-image="assets/images/works/documentary-portraits/documentary-portrait-05.jpg" data-caption-zh="纪实人像 05" data-caption-en="Documentary Portrait 05"><img src="assets/images/works/documentary-portraits/documentary-portrait-05.jpg" alt="Documentary Portrait 05" /><div class="work-info"><div class="work-meta"><span class="zh">纪实人像</span><span class="en">Documentary Portraits</span></div><h3 class="work-title">Documentary Portrait 05</h3></div></article>
+        <article class="work-card" data-category="documentary" data-image="assets/images/works/documentary-portraits/documentary-portrait-06.jpg" data-caption-zh="纪实人像 06" data-caption-en="Documentary Portrait 06"><img src="assets/images/works/documentary-portraits/documentary-portrait-06.jpg" alt="Documentary Portrait 06" /><div class="work-info"><div class="work-meta"><span class="zh">纪实人像</span><span class="en">Documentary Portraits</span></div><h3 class="work-title">Documentary Portrait 06</h3></div></article>
+        <article class="work-card" data-category="documentary" data-image="assets/images/works/documentary-portraits/documentary-portrait-07.jpg" data-caption-zh="纪实人像 07" data-caption-en="Documentary Portrait 07"><img src="assets/images/works/documentary-portraits/documentary-portrait-07.jpg" alt="Documentary Portrait 07" /><div class="work-info"><div class="work-meta"><span class="zh">纪实人像</span><span class="en">Documentary Portraits</span></div><h3 class="work-title">Documentary Portrait 07</h3></div></article>
+        <article class="work-card" data-category="documentary" data-image="assets/images/works/documentary-portraits/documentary-portrait-08.jpg" data-caption-zh="纪实人像 08" data-caption-en="Documentary Portrait 08"><img src="assets/images/works/documentary-portraits/documentary-portrait-08.jpg" alt="Documentary Portrait 08" /><div class="work-info"><div class="work-meta"><span class="zh">纪实人像</span><span class="en">Documentary Portraits</span></div><h3 class="work-title">Documentary Portrait 08</h3></div></article>
+        <article class="work-card" data-category="documentary" data-image="assets/images/works/documentary-portraits/documentary-portrait-09.jpg" data-caption-zh="纪实人像 09" data-caption-en="Documentary Portrait 09"><img src="assets/images/works/documentary-portraits/documentary-portrait-09.jpg" alt="Documentary Portrait 09" /><div class="work-info"><div class="work-meta"><span class="zh">纪实人像</span><span class="en">Documentary Portraits</span></div><h3 class="work-title">Documentary Portrait 09</h3></div></article>
+        <article class="work-card" data-category="documentary" data-image="assets/images/works/documentary-portraits/documentary-portrait-10.jpg" data-caption-zh="纪实人像 10" data-caption-en="Documentary Portrait 10"><img src="assets/images/works/documentary-portraits/documentary-portrait-10.jpg" alt="Documentary Portrait 10" /><div class="work-info"><div class="work-meta"><span class="zh">纪实人像</span><span class="en">Documentary Portraits</span></div><h3 class="work-title">Documentary Portrait 10</h3></div></article>
+        <article class="work-card" data-category="documentary" data-image="assets/images/works/documentary-portraits/documentary-portrait-11.jpg" data-caption-zh="纪实人像 11" data-caption-en="Documentary Portrait 11"><img src="assets/images/works/documentary-portraits/documentary-portrait-11.jpg" alt="Documentary Portrait 11" /><div class="work-info"><div class="work-meta"><span class="zh">纪实人像</span><span class="en">Documentary Portraits</span></div><h3 class="work-title">Documentary Portrait 11</h3></div></article>
+        <article class="work-card" data-category="documentary" data-image="assets/images/works/documentary-portraits/documentary-portrait-12.jpg" data-caption-zh="纪实人像 12" data-caption-en="Documentary Portrait 12"><img src="assets/images/works/documentary-portraits/documentary-portrait-12.jpg" alt="Documentary Portrait 12" /><div class="work-info"><div class="work-meta"><span class="zh">纪实人像</span><span class="en">Documentary Portraits</span></div><h3 class="work-title">Documentary Portrait 12</h3></div></article>
+
+        <!-- Human Stories / 人文 (9) -->
+        <article class="work-card" data-category="human" data-image="assets/images/works/human-stories/human-story-01.jpg" data-caption-zh="人文 01" data-caption-en="Human Story 01"><img src="assets/images/works/human-stories/human-story-01.jpg" alt="Human Story 01" /><div class="work-info"><div class="work-meta"><span class="zh">人文</span><span class="en">Human Stories</span></div><h3 class="work-title">Human Story 01</h3></div></article>
+        <article class="work-card" data-category="human" data-image="assets/images/works/human-stories/human-story-02.jpg" data-caption-zh="人文 02" data-caption-en="Human Story 02"><img src="assets/images/works/human-stories/human-story-02.jpg" alt="Human Story 02" /><div class="work-info"><div class="work-meta"><span class="zh">人文</span><span class="en">Human Stories</span></div><h3 class="work-title">Human Story 02</h3></div></article>
+        <article class="work-card" data-category="human" data-image="assets/images/works/human-stories/human-story-03.jpg" data-caption-zh="人文 03" data-caption-en="Human Story 03"><img src="assets/images/works/human-stories/human-story-03.jpg" alt="Human Story 03" /><div class="work-info"><div class="work-meta"><span class="zh">人文</span><span class="en">Human Stories</span></div><h3 class="work-title">Human Story 03</h3></div></article>
+        <article class="work-card" data-category="human" data-image="assets/images/works/human-stories/human-story-04.jpg" data-caption-zh="人文 04" data-caption-en="Human Story 04"><img src="assets/images/works/human-stories/human-story-04.jpg" alt="Human Story 04" /><div class="work-info"><div class="work-meta"><span class="zh">人文</span><span class="en">Human Stories</span></div><h3 class="work-title">Human Story 04</h3></div></article>
+        <article class="work-card" data-category="human" data-image="assets/images/works/human-stories/human-story-05.jpg" data-caption-zh="人文 05" data-caption-en="Human Story 05"><img src="assets/images/works/human-stories/human-story-05.jpg" alt="Human Story 05" /><div class="work-info"><div class="work-meta"><span class="zh">人文</span><span class="en">Human Stories</span></div><h3 class="work-title">Human Story 05</h3></div></article>
+        <article class="work-card" data-category="human" data-image="assets/images/works/human-stories/human-story-06.jpg" data-caption-zh="人文 06" data-caption-en="Human Story 06"><img src="assets/images/works/human-stories/human-story-06.jpg" alt="Human Story 06" /><div class="work-info"><div class="work-meta"><span class="zh">人文</span><span class="en">Human Stories</span></div><h3 class="work-title">Human Story 06</h3></div></article>
+        <article class="work-card" data-category="human" data-image="assets/images/works/human-stories/human-story-07.jpg" data-caption-zh="人文 07" data-caption-en="Human Story 07"><img src="assets/images/works/human-stories/human-story-07.jpg" alt="Human Story 07" /><div class="work-info"><div class="work-meta"><span class="zh">人文</span><span class="en">Human Stories</span></div><h3 class="work-title">Human Story 07</h3></div></article>
+        <article class="work-card" data-category="human" data-image="assets/images/works/human-stories/human-story-08.jpg" data-caption-zh="人文 08" data-caption-en="Human Story 08"><img src="assets/images/works/human-stories/human-story-08.jpg" alt="Human Story 08" /><div class="work-info"><div class="work-meta"><span class="zh">人文</span><span class="en">Human Stories</span></div><h3 class="work-title">Human Story 08</h3></div></article>
+        <article class="work-card" data-category="human" data-image="assets/images/works/human-stories/human-story-09.jpg" data-caption-zh="人文 09" data-caption-en="Human Story 09"><img src="assets/images/works/human-stories/human-story-09.jpg" alt="Human Story 09" /><div class="work-info"><div class="work-meta"><span class="zh">人文</span><span class="en">Human Stories</span></div><h3 class="work-title">Human Story 09</h3></div></article>
+
+        <!-- Portraits / 人像 (12) -->
+        <article class="work-card" data-category="portraits" data-image="assets/images/works/portraits/portrait-01.jpg" data-caption-zh="人像 01" data-caption-en="Portrait 01"><img src="assets/images/works/portraits/portrait-01.jpg" alt="Portrait 01" /><div class="work-info"><div class="work-meta"><span class="zh">人像</span><span class="en">Portraits</span></div><h3 class="work-title">Portrait 01</h3></div></article>
+        <article class="work-card" data-category="portraits" data-image="assets/images/works/portraits/portrait-02.jpg" data-caption-zh="人像 02" data-caption-en="Portrait 02"><img src="assets/images/works/portraits/portrait-02.jpg" alt="Portrait 02" /><div class="work-info"><div class="work-meta"><span class="zh">人像</span><span class="en">Portraits</span></div><h3 class="work-title">Portrait 02</h3></div></article>
+        <article class="work-card" data-category="portraits" data-image="assets/images/works/portraits/portrait-03.jpg" data-caption-zh="人像 03" data-caption-en="Portrait 03"><img src="assets/images/works/portraits/portrait-03.jpg" alt="Portrait 03" /><div class="work-info"><div class="work-meta"><span class="zh">人像</span><span class="en">Portraits</span></div><h3 class="work-title">Portrait 03</h3></div></article>
+        <article class="work-card" data-category="portraits" data-image="assets/images/works/portraits/portrait-04.jpg" data-caption-zh="人像 04" data-caption-en="Portrait 04"><img src="assets/images/works/portraits/portrait-04.jpg" alt="Portrait 04" /><div class="work-info"><div class="work-meta"><span class="zh">人像</span><span class="en">Portraits</span></div><h3 class="work-title">Portrait 04</h3></div></article>
+        <article class="work-card" data-category="portraits" data-image="assets/images/works/portraits/portrait-05.jpg" data-caption-zh="人像 05" data-caption-en="Portrait 05"><img src="assets/images/works/portraits/portrait-05.jpg" alt="Portrait 05" /><div class="work-info"><div class="work-meta"><span class="zh">人像</span><span class="en">Portraits</span></div><h3 class="work-title">Portrait 05</h3></div></article>
+        <article class="work-card" data-category="portraits" data-image="assets/images/works/portraits/portrait-06.jpg" data-caption-zh="人像 06" data-caption-en="Portrait 06"><img src="assets/images/works/portraits/portrait-06.jpg" alt="Portrait 06" /><div class="work-info"><div class="work-meta"><span class="zh">人像</span><span class="en">Portraits</span></div><h3 class="work-title">Portrait 06</h3></div></article>
+        <article class="work-card" data-category="portraits" data-image="assets/images/works/portraits/portrait-07.jpg" data-caption-zh="人像 07" data-caption-en="Portrait 07"><img src="assets/images/works/portraits/portrait-07.jpg" alt="Portrait 07" /><div class="work-info"><div class="work-meta"><span class="zh">人像</span><span class="en">Portraits</span></div><h3 class="work-title">Portrait 07</h3></div></article>
+        <article class="work-card" data-category="portraits" data-image="assets/images/works/portraits/portrait-08.jpg" data-caption-zh="人像 08" data-caption-en="Portrait 08"><img src="assets/images/works/portraits/portrait-08.jpg" alt="Portrait 08" /><div class="work-info"><div class="work-meta"><span class="zh">人像</span><span class="en">Portraits</span></div><h3 class="work-title">Portrait 08</h3></div></article>
+        <article class="work-card" data-category="portraits" data-image="assets/images/works/portraits/portrait-09.jpg" data-caption-zh="人像 09" data-caption-en="Portrait 09"><img src="assets/images/works/portraits/portrait-09.jpg" alt="Portrait 09" /><div class="work-info"><div class="work-meta"><span class="zh">人像</span><span class="en">Portraits</span></div><h3 class="work-title">Portrait 09</h3></div></article>
+        <article class="work-card" data-category="portraits" data-image="assets/images/works/portraits/portrait-10.jpg" data-caption-zh="人像 10" data-caption-en="Portrait 10"><img src="assets/images/works/portraits/portrait-10.jpg" alt="Portrait 10" /><div class="work-info"><div class="work-meta"><span class="zh">人像</span><span class="en">Portraits</span></div><h3 class="work-title">Portrait 10</h3></div></article>
+        <article class="work-card" data-category="portraits" data-image="assets/images/works/portraits/portrait-11.jpg" data-caption-zh="人像 11" data-caption-en="Portrait 11"><img src="assets/images/works/portraits/portrait-11.jpg" alt="Portrait 11" /><div class="work-info"><div class="work-meta"><span class="zh">人像</span><span class="en">Portraits</span></div><h3 class="work-title">Portrait 11</h3></div></article>
+        <article class="work-card" data-category="portraits" data-image="assets/images/works/portraits/portrait-12.jpg" data-caption-zh="人像 12" data-caption-en="Portrait 12"><img src="assets/images/works/portraits/portrait-12.jpg" alt="Portrait 12" /><div class="work-info"><div class="work-meta"><span class="zh">人像</span><span class="en">Portraits</span></div><h3 class="work-title">Portrait 12</h3></div></article>
+
+        <!-- Digital Art & Media / 数字艺术与自媒体 (6) -->
+        <article class="work-card" data-category="digital" data-image="assets/images/works/digital-art-media/digital-art-01.jpg" data-caption-zh="数字艺术与自媒体 01" data-caption-en="Digital Art & Media 01"><img src="assets/images/works/digital-art-media/digital-art-01.jpg" alt="Digital Art & Media 01" /><div class="work-info"><div class="work-meta"><span class="zh">数字艺术与自媒体</span><span class="en">Digital Art & Media</span></div><h3 class="work-title">Digital Art & Media 01</h3></div></article>
+        <article class="work-card" data-category="digital" data-image="assets/images/works/digital-art-media/digital-art-02.jpg" data-caption-zh="数字艺术与自媒体 02" data-caption-en="Digital Art & Media 02"><img src="assets/images/works/digital-art-media/digital-art-02.jpg" alt="Digital Art & Media 02" /><div class="work-info"><div class="work-meta"><span class="zh">数字艺术与自媒体</span><span class="en">Digital Art & Media</span></div><h3 class="work-title">Digital Art & Media 02</h3></div></article>
+        <article class="work-card" data-category="digital" data-image="assets/images/works/digital-art-media/digital-art-03.jpg" data-caption-zh="数字艺术与自媒体 03" data-caption-en="Digital Art & Media 03"><img src="assets/images/works/digital-art-media/digital-art-03.jpg" alt="Digital Art & Media 03" /><div class="work-info"><div class="work-meta"><span class="zh">数字艺术与自媒体</span><span class="en">Digital Art & Media</span></div><h3 class="work-title">Digital Art & Media 03</h3></div></article>
+        <article class="work-card" data-category="digital" data-image="assets/images/works/digital-art-media/digital-art-04.jpg" data-caption-zh="数字艺术与自媒体 04" data-caption-en="Digital Art & Media 04"><img src="assets/images/works/digital-art-media/digital-art-04.jpg" alt="Digital Art & Media 04" /><div class="work-info"><div class="work-meta"><span class="zh">数字艺术与自媒体</span><span class="en">Digital Art & Media</span></div><h3 class="work-title">Digital Art & Media 04</h3></div></article>
+        <article class="work-card" data-category="digital" data-image="assets/images/works/digital-art-media/digital-art-05.jpg" data-caption-zh="数字艺术与自媒体 05" data-caption-en="Digital Art & Media 05"><img src="assets/images/works/digital-art-media/digital-art-05.jpg" alt="Digital Art & Media 05" /><div class="work-info"><div class="work-meta"><span class="zh">数字艺术与自媒体</span><span class="en">Digital Art & Media</span></div><h3 class="work-title">Digital Art & Media 05</h3></div></article>
+        <article class="work-card" data-category="digital" data-image="assets/images/works/digital-art-media/digital-art-06.jpg" data-caption-zh="数字艺术与自媒体 06" data-caption-en="Digital Art & Media 06"><img src="assets/images/works/digital-art-media/digital-art-06.jpg" alt="Digital Art & Media 06" /><div class="work-info"><div class="work-meta"><span class="zh">数字艺术与自媒体</span><span class="en">Digital Art & Media</span></div><h3 class="work-title">Digital Art & Media 06</h3></div></article>
+
+        <!-- Nature / 自然 (6) -->
+        <article class="work-card" data-category="nature" data-image="assets/images/works/nature/nature-01.jpg" data-caption-zh="自然 01" data-caption-en="Nature 01"><img src="assets/images/works/nature/nature-01.jpg" alt="Nature 01" /><div class="work-info"><div class="work-meta"><span class="zh">自然</span><span class="en">Nature</span></div><h3 class="work-title">Nature 01</h3></div></article>
+        <article class="work-card" data-category="nature" data-image="assets/images/works/nature/nature-02.jpg" data-caption-zh="自然 02" data-caption-en="Nature 02"><img src="assets/images/works/nature/nature-02.jpg" alt="Nature 02" /><div class="work-info"><div class="work-meta"><span class="zh">自然</span><span class="en">Nature</span></div><h3 class="work-title">Nature 02</h3></div></article>
+        <article class="work-card" data-category="nature" data-image="assets/images/works/nature/nature-03.jpg" data-caption-zh="自然 03" data-caption-en="Nature 03"><img src="assets/images/works/nature/nature-03.jpg" alt="Nature 03" /><div class="work-info"><div class="work-meta"><span class="zh">自然</span><span class="en">Nature</span></div><h3 class="work-title">Nature 03</h3></div></article>
+        <article class="work-card" data-category="nature" data-image="assets/images/works/nature/nature-04.jpg" data-caption-zh="自然 04" data-caption-en="Nature 04"><img src="assets/images/works/nature/nature-04.jpg" alt="Nature 04" /><div class="work-info"><div class="work-meta"><span class="zh">自然</span><span class="en">Nature</span></div><h3 class="work-title">Nature 04</h3></div></article>
+        <article class="work-card" data-category="nature" data-image="assets/images/works/nature/nature-05.jpg" data-caption-zh="自然 05" data-caption-en="Nature 05"><img src="assets/images/works/nature/nature-05.jpg" alt="Nature 05" /><div class="work-info"><div class="work-meta"><span class="zh">自然</span><span class="en">Nature</span></div><h3 class="work-title">Nature 05</h3></div></article>
+        <article class="work-card" data-category="nature" data-image="assets/images/works/nature/nature-06.jpg" data-caption-zh="自然 06" data-caption-en="Nature 06"><img src="assets/images/works/nature/nature-06.jpg" alt="Nature 06" /><div class="work-info"><div class="work-meta"><span class="zh">自然</span><span class="en">Nature</span></div><h3 class="work-title">Nature 06</h3></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">Experience</div>
+        <div>
+          <h2><span class="zh">经历与方向</span><span class="en">Experience & Focus</span></h2>
+          
+        </div>
+      </div>
+
+      <div class="experience-list">
+        <article class="panel experience-item">
+          <div class="experience-time">2026 — Present</div>
+          <div>
+            <h3><span class="zh">独立摄影与数字影像创作</span><span class="en">Independent Photography & Digital Image Practice</span></h3>
+            <p class="zh">持续围绕人像、城市、纪实与数字影像展开创作，建立个人视觉语言与作品集系统。</p>
+            <p class="en">Developing a personal visual language through portraiture, urban narratives, documentary imagery, and digital image creation.</p>
+          </div>
+        </article>
+
+        <article class="panel experience-item">
+          <div class="experience-time">Selected Focus</div>
+          <div>
+            <h3><span class="zh">人像摄影 / 影像调色 / 数字艺术</span><span class="en">Portraits / Color Grading / Digital Art</span></h3>
+            <p class="zh">以人物情绪、光线层次与色彩结构为核心，强化作品的叙事性与情绪张力。</p>
+            <p class="en">Centering emotional presence, lighting, and color structure to create images with narrative depth and visual tension.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">Contact</div>
+        <div>
+          <h2><span class="zh">联系我</span><span class="en">Get in Touch</span></h2>
+          <p class="zh">欢迎合作、拍摄委托或创意项目交流。</p>
+          <p class="en">Available for collaborations, commissions, and creative projects.</p>
+        </div>
+      </div>
+
+      <div class="contact-grid" style="grid-template-columns: 1fr;">
+        <div class="panel contact-card">
+          <p class="zh">如需拍摄合作、品牌内容创作或创意项目交流，请通过邮箱联系我。</p>
+          <p class="en">For commissions, brand collaborations, or creative projects, please contact me by email.</p>
+          <div class="contact-links">
+            <a class="contact-link" href="mailto:Xyshall@gmail.com">
+              <div>
+                <small>Email</small>
+                <strong>Xyshall@gmail.com</strong>
+              </div>
+              <span>↗</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container footer-inner">
+      <div>© 2026 Yao Xiao. All Rights Reserved.</div>
+      <div><span class="zh">中英双语摄影作品集模板</span><span class="en">Bilingual photography portfolio template</span></div>
+    </div>
+  </footer>
+
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <div class="lightbox-inner">
+      <button class="lightbox-close" id="lightboxClose" aria-label="Close">×</button>
+      <img id="lightboxImage" src="" alt="Preview" />
+      <div class="lightbox-caption" id="lightboxCaption"></div>
+    </div>
+  </div>
+
+  <script>
+    const body = document.body;
+    const langButtons = document.querySelectorAll('[data-lang]');
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const workCards = document.querySelectorAll('.work-card');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImage = document.getElementById('lightboxImage');
+    const lightboxCaption = document.getElementById('lightboxCaption');
+    const lightboxClose = document.getElementById('lightboxClose');
+
+    function setLanguage(lang) {
+      body.classList.remove('lang-zh', 'lang-en');
+      body.classList.add(`lang-${lang}`);
+      localStorage.setItem('portfolio-language', lang);
+    }
+
+    langButtons.forEach(button => {
+      button.addEventListener('click', () => setLanguage(button.dataset.lang));
+    });
+
+    const savedLang = localStorage.getItem('portfolio-language');
+    if (savedLang === 'en') setLanguage('en');
+
+    function applyFilter(filter) {
+      workCards.forEach(card => {
+        const matched = card.dataset.category === filter;
+        card.style.display = matched ? '' : 'none';
+      });
+    }
+
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const filter = button.dataset.filter;
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        applyFilter(filter);
+      });
+    });
+
+    applyFilter('human');
+
+    workCards.forEach(card => {
+      card.addEventListener('click', () => {
+        if (card.style.display === 'none') return;
+        const currentLang = body.classList.contains('lang-en') ? 'en' : 'zh';
+        lightboxImage.src = card.dataset.image;
+        lightboxCaption.textContent = currentLang === 'en' ? card.dataset.captionEn : card.dataset.captionZh;
+        lightbox.classList.add('open');
+        lightbox.setAttribute('aria-hidden', 'false');
+      });
+    });
+
+    function closeLightbox() {
+      lightbox.classList.remove('open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      lightboxImage.src = '';
+    }
+
+    lightboxClose.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeLightbox();
+    });
+  </script>
+</body>
+</html>
